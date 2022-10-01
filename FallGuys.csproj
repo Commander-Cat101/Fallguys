@@ -18,9 +18,24 @@
         <DebugType>none</DebugType>
     </PropertyGroup>
 
-    <Import Project="..\btd6.targets" />
 
     <ItemGroup>
-      <None Remove="DisplayAsset\Fallguys.bundle" />
+      <Reference Include="0Harmony">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\MelonLoader\net35\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="MelonLoader">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\MelonLoader\net35\MelonLoader.dll</HintPath>
+      </Reference>
     </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="DisplayAsset\Bundles.resx" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="DisplayAsset\Bundles.Designer.cs" />
+    </ItemGroup>
+    
+    <Import Project="..\btd6.targets" />
+
 </Project>
