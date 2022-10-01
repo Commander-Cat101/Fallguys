@@ -33,12 +33,14 @@ public class FallGuys : BloonsTD6Mod
             MelonLogger.Msg(asset);
         //previous two lines are for debugging/finding names of assets
         
-        assetBundle = AssetBundle.LoadFromMemory(ExtractResource("fallguys.bundle"));// if using unityexplorer, there is an error, but everything still works
+        assetBundleTower = AssetBundle.LoadFromMemory(ExtractResource("fallguys.bundle"));// if using unityexplorer, there is an error, but everything still works
+        assetBundleTower = AssetBundle.LoadFromMemory(ExtractResource("crown.bundle"));
         ModHelper.Msg<FallGuys>("FallGuys loaded!");
     }
     
-    public static AssetBundle assetBundle;
-    
+    public static AssetBundle assetBundleTower;
+    public static AssetBundle assetBundleCrown;
+
     private byte[] ExtractResource(String filename)
     {
         Assembly a = MelonAssembly.Assembly; // get the assembly
@@ -64,6 +66,11 @@ public class FallGuysTower : ModTower
     {
         towerModel.display = new() {guidRef = "FallGuysTower-Prefab"}; //required for custom displays to be recognized
         towerModel.GetBehavior<DisplayModel>().display = new() {guidRef = "FallGuysTower-Prefab"}; //required for custom displays to be recognized
+        towerModel.GetBehavior<DisplayModel>().scale = towerModel.GetBehavior<DisplayModel>().scale * 0.6f;
+        var proj = towerModel.GetAttackModel().weapons[0].projectile;
+        proj.display = new() { guidRef = "FallGuysCrown-Prefab" };
+        proj.GetBehavior<DisplayModel>().display = new() { guidRef = "FallGuysCrown-Prefab" };
+
     }
 }
 
@@ -78,7 +85,10 @@ static class FactoryCreateAsyncPatch
         switch (__instance.objectId.guidRef) // makes sure to support loading more than one custom display
         {
             case "FallGuysTower-Prefab":
-                gObj = UnityEngine.Object.Instantiate(FallGuys.assetBundle.LoadAsset("Fall_Guys_Trice_skin").Cast<GameObject>(), __instance.__4__this.DisplayRoot); //load the asset from the asset bundle and instantiates/creates it
+                gObj = UnityEngine.Object.Instantiate(FallGuys.assetBundleTower.LoadAsset("Fall_Guys_Trice_skin").Cast<GameObject>(), __instance.__4__this.DisplayRoot); //load the asset from the asset bundle and instantiates/creates it
+                break;
+            case "FallGuysCrown-Prefab":
+                gObj = UnityEngine.Object.Instantiate(FallGuys.assetBundleCrown.LoadAsset("Fall_Guys_Crown").Cast<GameObject>(), __instance.__4__this.DisplayRoot); //load the asset from the asset bundle and instantiates/creates it
                 break;
             default:
                 return true; //if the display is not custom, let the game create the base display
