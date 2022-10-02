@@ -27,15 +27,6 @@
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\MelonLoader\net35\MelonLoader.dll</HintPath>
       </Reference>
     </ItemGroup>
-    
-    <ItemGroup>
-      <EmbeddedResource Remove="DisplayAsset\Bundles.resx" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Compile Remove="DisplayAsset\Bundles.Designer.cs" />
-    </ItemGroup>
-    
     <Import Project="..\btd6.targets" />
 
 </Project>
